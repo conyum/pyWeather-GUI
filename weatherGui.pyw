@@ -59,7 +59,7 @@ while True:
         vindstyrka = round(data['current']['wind_speed'], 1)
         funktighet = data['current']['humidity']
         hpa = data['current']['pressure']
-        sokText = 'Uppdatera'
+        sokText = 'Update'
     except:
         window['-OUTPUT-0'].update('Could not get the weather for the city provided!')
         continue
