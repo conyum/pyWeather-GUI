@@ -1,11 +1,10 @@
 import requests
-from datetime import datetime
 import PySimpleGUI as sg
-import sys
+import subprocess
 import os
+from datetime import datetime
 from json import (load as jsonload, dump as jsondump)
 from os import path
-from sys import platform
 
 #THX to UMAN231 for the help getting this done.
 
@@ -14,19 +13,12 @@ v = 'v0.3'
 sg.ChangeLookAndFeel('SystemDefault')
 timeout = 1800*1000
 sokText = 'Sök'
-apiKey = '9bf26205db1db79d1aa8083ad6c981ba'
 cel = '°C'
 far = '°F'
 sN = os.path.basename(__file__)
-if platform == "linux" or platform == "linux2":
-    devNull = "/dev/null"
-elif platform == "darwin":
-    devNull = "/dev/null"
-elif platform == "win32":
-    devNull = "NUL"
 
 SETTINGS_FILE = path.join(path.dirname(__file__), r'settings_file.cfg')
-DEFAULT_SETTINGS = {'city': 'new york', 'unitf': True, 'unitm': False, 'apikey' : apiKey}
+DEFAULT_SETTINGS = {'city': 'new york', 'unitf': True, 'unitm': False, 'apikey' : 'ENTER YOUR KEY'}
 SETTINGS_KEYS_TO_ELEMENT_KEYS = {'city': '-INPUT-0', 'unitf': '-UNITF-', 'unitm': '-UNITM-', 'apikey' : '-APIKEY-'}
 
 def load_settings(settings_file, default_settings):
@@ -92,7 +84,7 @@ def main():
             if event == 'Save & exit':
                 window.close()
                 save_settings(SETTINGS_FILE, settings, values)
-                os.system(f"python {sN} > {devNull} 2>&1")
+                subprocess.call(f"pythonw {sN}")
                 break
             
         if settings['unitf'] == True:
@@ -101,7 +93,7 @@ def main():
         if settings['unitm'] == True:
             units = 'metric'
             grader = cel
-        
+        apiKey = settings['apikey']
         stadIn = settings['city']
         stringKey = settings['apikey']
         urlStad = f'https://api.openweathermap.org/geo/1.0/direct?q={stadIn}&limit=1&appid={stringKey}'
