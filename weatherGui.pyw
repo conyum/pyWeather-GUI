@@ -1,8 +1,8 @@
 import requests
+from datetime import datetime
 import PySimpleGUI as sg
 import sys
 import os
-from datetime import datetime
 from json import (load as jsonload, dump as jsondump)
 from os import path
 from sys import platform
