@@ -5,6 +5,8 @@ You will need to install the following librarys
 
 ```pip install requests``` 
 
+```pip install subprocess``` 
+
 ```pip install PySimpleGui```
 
 ~~Change ```unit = ``` to 1(metric) or 0(imperial)
