@@ -1,10 +1,11 @@
 import requests
-from datetime import datetime
 import PySimpleGUI as sg
 import sys
 import os
+from datetime import datetime
 from json import (load as jsonload, dump as jsondump)
 from os import path
+from sys import platform
 
 #THX to UMAN231 for the help getting this done.
 
@@ -17,7 +18,12 @@ apiKey = '9bf26205db1db79d1aa8083ad6c981ba'
 cel = '°C'
 far = '°F'
 sN = os.path.basename(__file__)
-#end settings
+if platform == "linux" or platform == "linux2":
+    devNull = "/dev/null"
+elif platform == "darwin":
+    devNull = "/dev/null"
+elif platform == "win32":
+    devNull = "NUL"
 
 SETTINGS_FILE = path.join(path.dirname(__file__), r'settings_file.cfg')
 DEFAULT_SETTINGS = {'city': 'new york', 'unitf': True, 'unitm': False, 'apikey' : apiKey}
@@ -86,7 +92,7 @@ def main():
             if event == 'Save & exit':
                 window.close()
                 save_settings(SETTINGS_FILE, settings, values)
-                os.system(f"python {sN}")
+                os.system(f"python {sN} > {devNull} 2>&1")
                 break
             
         if settings['unitf'] == True:
